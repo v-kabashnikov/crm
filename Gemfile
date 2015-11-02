@@ -1,0 +1,37 @@
+source 'https://rubygems.org'
+
+gem 'rails', '4.2.3'
+gem 'pg'
+
+gem 'uglifier', '>= 1.3.0'
+gem 'sass-rails', '~> 5.0'
+gem 'coffee-rails', '~> 4.1.0'
+gem 'jquery-rails'
+gem 'turbolinks'
+
+gem 'devise', '~> 3.5.2'
+gem 'cancancan', '~> 1.13', '>= 1.13.1'
+gem 'faker', '~> 1.5.0'
+gem 'carrierwave', '~> 0.10.0'
+
+gem 'bootstrap-sass', '~> 3.3.5'
+gem 'will_paginate', '~> 3.0.6'
+gem 'will_paginate-bootstrap', '~> 1.0.1'
+
+gem 'figaro', '~> 1.1', '>= 1.1.1'
+
+group :production do
+  gem 'unicorn', '~> 4.9'
+end
+
+group :development do
+  gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+end
+
+group :development, :test do
+  gem 'pry', '~> 0.10.3'
+  gem 'web-console', '~> 2.0'
+end

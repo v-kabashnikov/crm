@@ -1,0 +1,39 @@
+<%= render 'dashboard/admin/header' %>
+<p id="notice"><%= notice %></p>
+<br>
+<div class="container">
+  <div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-info">
+        <%= link_to 'Управление пользователями', manage_users_path %>
+      </button>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-info"><a href="#">Настройка полей</a></button>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-info"><a href="#">Список авторов</a></button>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-info"><a href="#">Список заказчиков</a></button>
+    </div>
+  </div>
+</div>
+<br>
+<div>
+  <% active_role = params[:role] || 'client' %>
+  <ul class="nav nav-tabs" role="tablist">
+    <% ['client', 'employee'].each do |role| %>
+    <% klass = 'active' if role == active_role %>
+      <li role="presentation" class="<%= klass %> clickable">
+        <%= link_to "#{role}", "##{role}", {"aria-controls": role, "role": "tab", "data-toggle": "tab" } %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+    <% User::ROLES.each do |role| %>
+      <% klass = 'active' if role == active_role %>
+      <%= render partial: 'index', locals: { users: @users.where(role: role.capitalize), role: role, klass: klass } %>
+    <% end %>
+  </div>
+</div>

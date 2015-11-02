@@ -1,0 +1,9 @@
+<%= render 'dashboard/admin/header' %>
+<p id="notice"><%= notice %></p>
+<br>
+<h1>Редактирование пользователя</h1>
+<%= form_for @user, as: :user, url: user_path(@user) do |f| %>
+  <%= render partial: 'form', :locals => { :f => f } %>
+  <%= f.button "Сохранить", class: 'btn btn-primary' %>
+  <%= link_to 'Назад', "javascript:history.back()", class: 'btn btn-default' %>
+<% end %>

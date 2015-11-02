@@ -1,0 +1,15 @@
+<h1>Welcome</h1>
+<% if user_signed_in? %> 
+  <%= link_to('Выйти', destroy_user_session_path, :method => :delete) %>
+  <% if current_user.role = "Admin" %>
+  	<br>
+	<%= link_to('Пользователи', users_path) %>
+  <% end %> 
+  <br>
+<% else %>
+  <%= link_to('Войти', new_user_session_path)  %>
+  <br>
+  <%= link_to('Зарегистрироваться как клиент', new_user_registration_path('client'))  %>
+  <br>
+  <%= link_to('Зарегистрироваться как исполнитель', new_user_registration_path('employee'))  %>
+<% end %>

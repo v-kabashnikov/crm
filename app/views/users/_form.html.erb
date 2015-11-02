@@ -1,0 +1,47 @@
+  <% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="form-group">
+  <%= f.label :role %><br />
+  <%= f.collection_select :role, User::ROLES, :capitalize, :capitalize, { prompt: 'Выберите роль пользователя'}, { required: true, class: 'form-control' } %>
+</div>
+<div class="form-group">
+  <%= f.label :email %><br />
+  <%= f.email_field :email, autofocus: true, required: true, class: 'form-control', placeholder: 'E-mail' %>
+</div>
+<div class="form-group">
+  <%= f.label :password %>
+  <%= f.text_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Пароль'%>
+</div>
+<div class="form-group">
+  <%= f.label :name %><br />
+  <%= f.text_field :name, class: 'form-control', placeholder: 'ФИО' %>
+</div>
+<div class="form-group">
+  <%= f.label :phone %><br />
+  <%= f.text_field :phone, class: 'form-control', placeholder: 'Телефон' %>
+</div>
+<div class="form-group hiddenable Client hidden">
+  <%= f.label :city %><br />
+  <%= f.text_field :city, class: 'form-control', placeholder: 'Город' %>
+</div>
+<div class="form-group hiddenable Employee hidden">
+  <%= f.label :skype %><br />
+  <%= f.text_field :skype, class: 'form-control', placeholder: 'Skype' %>
+</div>
+<div class="form-group hiddenable Employee hidden">
+  <%= f.label :speciality_id %><br />
+  <%= f.collection_select :speciality_id, Speciality.all, :id, :name, { prompt: 'Специализация'}, { class: 'form-control' } %>
+</div>
+<div class="checkbox">
+  <%= f.label :activated %>
+  <%= f.check_box :activated, style: "margin-left:-555px;" %>
+</div>
+

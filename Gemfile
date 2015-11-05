@@ -12,11 +12,13 @@ gem 'turbolinks'
 gem 'devise', '~> 3.5.2'
 gem 'cancancan', '~> 1.13', '>= 1.13.1'
 gem 'faker', '~> 1.5.0'
-gem 'carrierwave', '~> 0.10.0'
+gem 'paperclip', '~> 4.3'
 
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'will_paginate', '~> 3.0.6'
 gem 'will_paginate-bootstrap', '~> 1.0.1'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
 gem 'figaro', '~> 1.1', '>= 1.1.1'
 

@@ -8,6 +8,11 @@ specialities.each do |speciality|
   Speciality.create(name: speciality)
 end
 
+worktypes = %w[Диплом Курсовая]
+worktypes.each do |worktype|
+  Worktype.create(name: worktype)
+end
+
 roles = %w[Admin Manager Employee Client]
 specialities = Speciality.all
 

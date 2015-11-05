@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  worktype_id: 
+  wortype_other: MyString
+  speciality_id: 
+  speciality_other: MyString
+  institution: MyString
+  theme: MyString
+  uniqueness: MyString
+  file: 
+  comment: MyText
+  deadline: 2015-11-03
+  page_number: 1
+
+two:
+  worktype_id: 
+  wortype_other: MyString
+  speciality_id: 
+  speciality_other: MyString
+  institution: MyString
+  theme: MyString
+  uniqueness: MyString
+  file: 
+  comment: MyText
+  deadline: 2015-11-03
+  page_number: 1

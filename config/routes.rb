@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
+  resources :orders
+  post '/orders/welcome', to: 'welcome#create_order', as: :welcome_orders
+
+  resources :worktypes
 
   resources :specialities
   devise_for :users, path_names: { sign_up: '/sign_up/:role' }
@@ -8,6 +11,11 @@ Rails.application.routes.draw do
     resources :users do
       get '/manage', to: 'users#manage', as: :manage, on: :collection
     end
+  end
+
+  scope '/dashboard' do 
+    get '', to: 'dashboard#index', as: :dashboard_index
+    get 'create_order', to: 'dashboard#create_order', as: :dashboard_create_order
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

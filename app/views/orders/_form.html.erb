@@ -1,0 +1,55 @@
+<%= form_for(@order) do |f| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% @order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :worktype_id %><br>
+    <%= f.collection_select :worktype_id, Worktype.all, :id, :name, { prompt: 'Выберите тип работы'}, {class: 'form-control'} %>
+  </div>
+  <div class="form-group" id="worktype_other" >
+    <%= f.label :wortype_other %><br>
+    <%= f.text_field :wortype_other, class: 'form-control', placeholder: 'Введите тип работы, если его нет в списке', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :speciality_id %><br>
+   <%= f.collection_select :speciality_id, Speciality.all, :id, :name, { prompt: 'Выберите предмет'}, {class: 'form-control'} %>
+  </div>
+  <div class="form-group" id="speciality_other">
+    <%= f.label :speciality_other %><br>
+    <%= f.text_field :speciality_other, class: 'form-control', placeholder: 'Введите название предмета, если его нет в списке', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :institution %><br>
+    <%= f.text_field :institution, placeholder: 'Учебное заведение', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :theme %><br>
+    <%= f.text_field :theme, placeholder: 'Тема работы', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :uniqueness %><br>
+    <%= f.text_field :uniqueness, placeholder: 'Уникальность', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :comment %><br>
+    <%= f.text_area :comment, placeholder: 'Комментарий', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :deadline %><br>
+    <%= f.date_select :deadline, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :page_number %><br>
+    <%= f.number_field :page_number, placeholder: 'Количество страниц', class: 'form-control' %>
+  </div>
+  <%= f.button "Создать", class: 'btn btn-primary' %>
+<% end %>

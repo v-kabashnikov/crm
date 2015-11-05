@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    puts '1' * 100
     @user = User.new(user_params)
     if @user.save
       flash[:notice] = "Successfully created User."

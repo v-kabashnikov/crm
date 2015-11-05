@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Worktype:</strong>
+  <%= @order.worktype %>
+</p>
+
+<p>
+  <strong>Wortype other:</strong>
+  <%= @order.wortype_other %>
+</p>
+
+<p>
+  <strong>Speciality:</strong>
+  <%= @order.speciality %>
+</p>
+
+<p>
+  <strong>Speciality other:</strong>
+  <%= @order.speciality_other %>
+</p>
+
+<p>
+  <strong>Institution:</strong>
+  <%= @order.institution %>
+</p>
+
+<p>
+  <strong>Theme:</strong>
+  <%= @order.theme %>
+</p>
+
+<p>
+  <strong>Uniqueness:</strong>
+  <%= @order.uniqueness %>
+</p>
+
+
+<p>
+  <strong>Comment:</strong>
+  <%= @order.comment %>
+</p>
+
+<p>
+  <strong>Deadline:</strong>
+  <%= @order.deadline %>
+</p>
+
+<p>
+  <strong>Page number:</strong>
+  <%= @order.page_number %>
+</p>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

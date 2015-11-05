@@ -12,7 +12,45 @@
  *
  *= require_tree .
  *= require_self
-
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'bootstrap-datetimepicker';
+
+body,
+html {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+}
+body {
+	font-size: 16px;
+	height: 100%;
+	min-height: 100%;
+	background-color: #f9f9f9;
+}
+.wrapper {
+	min-height: 100%;
+	position: relative;
+}
+
+.table .glyphicon:hover {
+	cursor: pointer;
+}
+.main_content {
+	height: 100%;
+	min-height: 100%;
+	padding-bottom: 180px;
+}
+.footer {
+	position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+input {
+	width: 100%;
+}
+.btn-group .btn a {
+	display: block;
+}

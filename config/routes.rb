@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  resources :orders
+  resources :orders do
+    get '/approve', to: 'orders#approve', as: :approve, on: :member
+  end
   post '/orders/welcome', to: 'welcome#create_order', as: :welcome_orders
 
   resources :worktypes
+  resources :parts
 
   resources :specialities
   devise_for :users, path_names: { sign_up: '/sign_up/:role' }

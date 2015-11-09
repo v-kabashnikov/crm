@@ -2,7 +2,7 @@
 
 one:
   worktype_id: 
-  wortype_other: MyString
+  worktype_other: MyString
   speciality_id: 
   speciality_other: MyString
   institution: MyString
@@ -15,7 +15,7 @@ one:
 
 two:
   worktype_id: 
-  wortype_other: MyString
+  worktype_other: MyString
   speciality_id: 
   speciality_other: MyString
   institution: MyString

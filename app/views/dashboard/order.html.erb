@@ -1,0 +1,310 @@
+<%= render "dashboard/#{current_user.role.downcase}/header" %>
+<div class="container">
+  <!-- ================================================== -->
+  <div class="page-header">
+    <h2 class="text-center">Заказ №<%= @order.id%> <button type="button" class="btn btn-info">Завершить заказ</button></h2>
+  </div>
+  <!-- ================================================== -->
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <% client = @order.client; employee = @order.employee %>
+      <% if client %>
+        <% if can? :read, client %>
+          <%= render partial: 'dashboard/contacts', locals: {user: client, klass: ''} %>
+        <% end %>
+      <% end %>
+      <% if employee %>
+        <% if can? :read, employee %>
+          <%= render partial: 'dashboard/contacts', locals: {user: employee, klass: 'pull-right'} %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <!-- ================================================== -->
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <!-- ================================================== -->
+          <div>
+            <button type="button" class="btn btn-success pull-left"><%= @order.display_status %></button>
+            <button type="button" class="btn btn-primary pull-right">Поиск исполнителя</button>
+          </div>
+          <div class="clearfix"></div>
+          <h3>Примечания (по всему заказу)</h3>
+          <form>
+            <div class="form-group">
+              <label for="note">Заметки</label>
+              <textarea class="form-control" rows="3" id="note"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="note_author">Заметки для автора</label>
+              <textarea class="form-control" rows="3" id="note_author"></textarea>
+            </div>
+            <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+          </form>
+          <!-- ================================================== -->
+          <% if can? :create, Part %>
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <% if @order.parts %>
+              <% @order.parts.each do |part| %>
+                <%= render partial: 'parts/form', locals: {part: part} %>
+              <% end %>
+            <% end %>
+            <%= render partial: 'parts/form', locals: {part: Part.new } %>
+          </div>
+          <% end %>
+          <!-- panel-group -->
+          <!--<button type="button" class="btn btn-primary btn-lg btn-block">Добавить часть</button>-->
+          <div class="clearfix"></div>
+          <!--<br/>-->
+          <!-- ================================================== -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Доработки</h3>
+            </div>
+            <div class="panel-body">
+              <form>
+                <div class="well">
+                  <p class="text-primary"><a href="#">file_name.doc</a></p>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-xs-5">
+                        <label for="moderation" class="control-label">Модерация</label>
+                      </div>
+                      <div class="col-xs-7">
+                        <select class="form-control" id="moderation">
+                          <option>Одобрено</option>
+                          <option>В топку</option>
+                          <option>Сойдет</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-lg btn-block">Новая доработка</button>
+                <br/>
+                <div class="well">
+                  <div class="form-group">
+                    <label for="" class="control-label">Прикрепить файл</label>
+                    <input type="file" id="">
+                  </div>
+                  <div class="form-group">
+                    <label for="" class=" control-label">Комментарий</label>
+                    <textarea class="form-control" rows="3" id=""></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-lg btn-block">Добавить доработку</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- ================================================== -->
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <form>
+                <p class="text-muted text-uppercase text-center"><strong>Перетащите файлы сюда</strong></p>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input type="file" id="new_part_file">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- ================================================== -->
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+      <% if can? :manage, @order %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <!-- ================================================== -->
+          <%= form_for(@order) do |f| %>
+            <div>
+              <p class="pull-left">Сроки выполнения</p>
+              <%= f.button "Сохранить", class: 'btn btn-primary pull-right' %>
+            </div>
+            <div class="clearfix"></div>
+            <br/>
+            <div class="row">
+              <div class="form-group col-lg-4">
+                <%= f.label :deadline %>
+                <%= f.date_select :deadline %>
+              </div>
+              <div class="form-group col-lg-4">
+                <%= f.label :inform_date %>
+                <%= f.datetime_select :inform_date %>
+              </div>
+              <div class="form-group col-lg-4">
+                <%= f.label :employee_deadline %>
+                <%= f.datetime_select :employee_deadline %>
+              </div>
+            </div>
+          <% end %>
+          <!-- ================================================== -->
+        </div>
+        <!-- panel-body -->
+      </div>
+      <% end %>
+      <!-- panel panel-default -->
+      <!-- ================================================== -->
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="well well-sm">
+            <div class="media">
+              <div class="media-left media-middle">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading"><span class="text-primary">Администратор </span>| <span class="text-muted">20.10.2015 </span></h4>
+                <p>Гирокомпас устойчив. Вращение вращает устойчивый интеграл от переменной величины. Согласно теории устойчивости движения векторная форма стационарно переворачивает математический маятник. Центр сил представляет собой твердый крен.</p>
+              </div>
+            </div>
+          </div>
+          <div class="well well-sm">
+            <div class="media">
+              <div class="media-left media-middle">
+                <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading"><span class="text-success">Заказчик </span>| <span class="text-muted">21.10.2015 </span></h4>
+                <p>В самом общем случае угол тангажа методически требует большего внимания к анализу ошибок, которые даёт периодический курс, составляя уравнения Эйлера для этой системы координат.</p>
+              </div>
+            </div>
+          </div>
+          <div class="well well-sm">
+            <div class="media">
+              <div class="media-left media-middle">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading"><span class="text-primary">Администратор </span>| <span class="text-muted">22.10.2015 </span></h4>
+                <p>Вращение вращает устойчивый интеграл от переменной величины.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- panel -->
+      <!-- ================================================== -->
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form>
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                <div class="form-group">
+                  <label for="">Cообщение</label>
+                  <textarea class="form-control" rows="5" id=""></textarea>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <p>Отправить сообщение</p>
+                <button type="submit" class="btn btn-primary btn-block">Отправить заказчику</button>
+                <button type="submit" class="btn btn-warning btn-block">Отправить автору</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- panel -->
+      <!-- ================================================== -->
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3>Оплаты</h3>
+          <form>
+            <table class="table table-striped">
+              <tr>
+                <td>Стоимость проекта</td>
+                <td><input type="number"></td>
+                <td>Стоимость для автора</td>
+                <td><input type="number"></td>
+              </tr>
+              <tr>
+                <td>Получено от клиента</td>
+                <td><strong>1 000 000</strong></td>
+                <td>Оплачено работы</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Выписать счет</td>
+                <td><input type="number"></td>
+                <td>Оптравить на оплату</td>
+                <td><input type="number"></td>
+              </tr>
+              <tr>
+                <td>Стоит на оплате</td>
+                <td>1000</td>
+                <td>Суммарно на оплату</td>
+                <td>0</td>
+              </tr>
+            </table>
+            <div class="row">
+              <div class="col-sm-7 col-xs-12">
+                <p>Подтвердить платеж</p>
+                <button type="button" class="btn btn-default">Подтвердить</button>
+                <button type="button" class="btn btn-default">Отмена</button>
+                <button type="button" class="btn btn-info">Чек 1</button>
+              </div>
+              <div class="col-sm-5 col-xs-12">
+                <button type="submit" class="btn btn-primary pull-right">Сохранить</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- ================================================== -->
+    </div>
+    <!-- col-lg-8 -->
+  </div>
+  <!-- row -->
+  <!-- ================================================== -->
+  <button class="btn btn-default btn-block btn-lg" type="button" data-toggle="collapse" data-target="#order_info" aria-expanded="false" aria-controls="order_info">
+    Информация о заказе <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+  </button>
+  <div class="collapse" id="order_info">
+    <div class="well">
+      <div class="row">
+        <div class="col-lg-6 col-md-7 col-sm-10 col-xs-12">
+          <form>
+            <div class="form-group">
+              <label for="">Специальность</label>
+              <select class="form-control">
+                <option>Программирование</option>
+                <option>Нанотехнологии</option>
+                <option>Контроль разума</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="">Наименование</label>
+              <input type="test" class="form-control" id="" placeholder="Наименование">
+            </div>
+            <div class="form-group">
+              <label for="">Содержание</label>
+              <textarea class="form-control" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="">Дополнительные требования или рекомендации</label>
+              <textarea class="form-control" rows="5"></textarea>
+            </div>
+            <p>Сроки выполнения</p>
+            <table class="table table-striped">
+              <tr>
+                <th>Наименование</th>
+                <th>Дата/время</th>
+              </tr>
+              <tr>
+                <td>Дата оформления</td>
+                <td><input type="datetime-local"></td>
+              </tr>
+            </table>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <!-- ================================================== -->
+</div>
+<!-- container -->

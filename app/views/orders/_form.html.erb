@@ -2,26 +2,24 @@
   <% if @order.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
       <ul>
-      <% @order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
-
   <div class="form-group">
-    <%= f.label :worktype_id %><br>
+    <%= f.label :worktype %><br>
     <%= f.collection_select :worktype_id, Worktype.all, :id, :name, { prompt: 'Выберите тип работы'}, {class: 'form-control'} %>
   </div>
   <div class="form-group" id="worktype_other" >
-    <%= f.label :wortype_other %><br>
-    <%= f.text_field :wortype_other, class: 'form-control', placeholder: 'Введите тип работы, если его нет в списке', class: 'form-control' %>
+    <%= f.label :worktype_other %><br>
+    <%= f.text_field :worktype_other, class: 'form-control', placeholder: 'Введите тип работы, если его нет в списке', class: 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :speciality_id %><br>
-   <%= f.collection_select :speciality_id, Speciality.all, :id, :name, { prompt: 'Выберите предмет'}, {class: 'form-control'} %>
+    <%= f.label :speciality %><br>
+    <%= f.collection_select :speciality_id, Speciality.all, :id, :name, { prompt: 'Выберите предмет'}, {class: 'form-control'} %>
   </div>
   <div class="form-group" id="speciality_other">
     <%= f.label :speciality_other %><br>
@@ -51,5 +49,42 @@
     <%= f.label :page_number %><br>
     <%= f.number_field :page_number, placeholder: 'Количество страниц', class: 'form-control' %>
   </div>
-  <%= f.button "Создать", class: 'btn btn-primary' %>
+
+<% if ["Admin", "Manager"].include? current_user.role %>
+  <div class="row">
+    <div class="col-sm-6 col-xs-12">
+        <div class="form-group">
+    <%= f.label :status %><br>
+    <%= f.collection_select :status, Order.status_names_for_select, :second, :first, { prompt: 'Статус'}, {class: 'form-control'} %>
+  </div>
+      <div class="form-group">
+        <%= f.label :client %><br>
+        <%= f.collection_select :client_id, Client.all, :id, :name, { prompt: 'Заказчик'}, {class: 'form-control'} %>
+      </div>
+      <div class="form-group">
+        <%= f.label :employee %><br>
+        <%= f.collection_select :employee_id, Employee.all, :id, :name, { prompt: 'Испонитель'}, {class: 'form-control'} %>
+      </div>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <p>Сроки выполнения</p>
+      <table class="table table-striped">
+        <tr>
+          <th>Наименование</th>
+          <th>Дата/время</th>
+        </tr>
+        <tr>
+          <td>Дата информирования</td>
+          <td><%= f.datetime_select :inform_date %></td>
+        </tr>
+        <tr>
+          <td>Срок для автора</td>
+          <td><%= f.datetime_select :employee_deadline %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+<% end %>
+
+  <%= f.button "Сохранить", class: 'btn btn-primary' %>
 <% end %>

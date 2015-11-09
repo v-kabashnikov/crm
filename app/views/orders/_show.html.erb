@@ -1,0 +1,10 @@
+<% display_attributes = [:worktype, :worktype_other, :speciality, :speciality_other, 
+  :institution, :theme, :uniqueness, :comment, :deadline, :page_number] %>
+<% display_attributes.each do |attr| %>
+  <% unless @order.send(attr).to_s.empty? %>
+    <p>
+      <strong><%= t "activerecord.attributes.order.#{attr}" %>:</strong>
+      <%= @order.send(attr).to_s %>
+    </p>
+  <% end %>
+<% end %>

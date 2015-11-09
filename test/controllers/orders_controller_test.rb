@@ -18,7 +18,8 @@ class OrdersControllerTest < ActionController::TestCase
 
   test "should create order" do
     assert_difference('Order.count') do
-      post :create, order: { comment: @order.comment, deadline: @order.deadline, file: @order.file, institution: @order.institution, page_number: @order.page_number, speciality_id: @order.speciality_id, speciality_other: @order.speciality_other, theme: @order.theme, uniqueness: @order.uniqueness, worktype_id: @order.worktype_id, wortype_other: @order.wortype_other }
+      post :create, order: { comment: @order.comment, deadline: @order.deadline, file: @order.file, institution: @order.institution, page_number: @order.page_number, speciality_id: @order.speciality_id, speciality_other: @order.speciality_other, theme: @order.theme, uniqueness: @order.uniqueness, worktype_id: @order.worktype_id, worktype_other: @order.work
+        type_other }
     end
 
     assert_redirected_to order_path(assigns(:order))
@@ -35,7 +36,7 @@ class OrdersControllerTest < ActionController::TestCase
   end
 
   test "should update order" do
-    patch :update, id: @order, order: { comment: @order.comment, deadline: @order.deadline, file: @order.file, institution: @order.institution, page_number: @order.page_number, speciality_id: @order.speciality_id, speciality_other: @order.speciality_other, theme: @order.theme, uniqueness: @order.uniqueness, worktype_id: @order.worktype_id, wortype_other: @order.wortype_other }
+    patch :update, id: @order, order: { comment: @order.comment, deadline: @order.deadline, file: @order.file, institution: @order.institution, page_number: @order.page_number, speciality_id: @order.speciality_id, speciality_other: @order.speciality_other, theme: @order.theme, uniqueness: @order.uniqueness, worktype_id: @order.worktype_id, worktype_other: @order.worktype_other }
     assert_redirected_to order_path(assigns(:order))
   end
 

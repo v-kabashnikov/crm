@@ -1,0 +1,29 @@
+ru:
+  activerecord:
+    models:
+      order: заказ
+    attributes:
+      order:
+        worktype: 'Тип работы'
+        worktype_other: 'Тип работы (другое)'
+        speciality: Предмет
+        speciality_other: 'Предмет (другое)'
+        institution: 'Учебное заведение'
+        theme: Тема
+        uniqueness: Уникальность
+        comment: Комментарий
+        deadline: 'Срок выполнения'
+        inform_date: 'Дата информирования'
+        employee_deadline: 'Срок для исполнителя'
+        page_number: 'Количество страниц'
+        status: Статус
+        client: Заказчик
+        employee: Исполнитель
+        statuses:
+          moderation: Модерация
+          approved: Одобрен
+          employee_searching: 'Поиск исполнителя'
+          prepayment_waiting: 'Ожидание предоплаты'
+          in_work: 'В работе'
+          solved: 'Решено'
+          finished: 'Завершено'

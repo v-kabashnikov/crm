@@ -6,7 +6,9 @@ ready = function() {
        $("."+ $(this).val()).removeClass("hidden");  
     });
 
-
+	$(".mobile-phone").mask("+999 99 999 99 99");
+	$('.datetimepicker').datetimepicker();
+	$('.datepicker').datetimepicker();
 
 };
 

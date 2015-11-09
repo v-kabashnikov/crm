@@ -15,9 +15,8 @@ class WelcomeController < ApplicationController
       if @client.save
         @order.client_id = @client.id
         token = @client.send(:set_reset_password_token)
-        # Devise::Mailer.reset_password_instructions(@client, token).deliver_now
+        Devise::Mailer.reset_password_instructions(@client, token).deliver_now
         if @order.save
-          # flash[:notice] = 'Заказ успешно создан. Вы получите на email инструкцию для входа в личный кабинет'
           redirect_to root_path, notice: 'Заказ успешно создан. Вы получите на email инструкцию для входа в личный кабинет'
         else
           render :index
@@ -31,7 +30,7 @@ class WelcomeController < ApplicationController
 
   private
   def order_params
-    params.require(:order).permit(:worktype_id, :wortype_other, :speciality_id, :speciality_other,
+    params.require(:order).permit(:worktype_id, :worktype_other, :speciality_id, :speciality_other,
                                   :institution, :theme, :uniqueness, :document, :comment, :deadline,
                                   :page_number, { client: [:email, :phone] })
   end

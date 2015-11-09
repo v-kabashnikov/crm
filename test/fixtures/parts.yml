@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  deadline: 2015-11-05 18:32:19
+  order_id: 
+  description: MyText
+  file: 
+  status: 1
+
+two:
+  name: MyString
+  deadline: 2015-11-05 18:32:19
+  order_id: 
+  description: MyText
+  file: 
+  status: 1

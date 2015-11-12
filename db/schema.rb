@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109093221) do
+ActiveRecord::Schema.define(version: 20151111160329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "sender_id",               null: false
+    t.integer  "receiver_id",             null: false
+    t.text     "content",                 null: false
+    t.integer  "status",      default: 0
+    t.integer  "order_id",                null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "messages", ["order_id"], name: "index_messages_on_order_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "client_id"
@@ -99,6 +111,9 @@ ActiveRecord::Schema.define(version: 20151109093221) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "messages", "orders"
+  add_foreign_key "messages", "users", column: "receiver_id"
+  add_foreign_key "messages", "users", column: "sender_id"
   add_foreign_key "orders", "specialities"
   add_foreign_key "orders", "users", column: "client_id"
   add_foreign_key "orders", "users", column: "employee_id"

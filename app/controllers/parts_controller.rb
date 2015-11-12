@@ -1,5 +1,5 @@
 class PartsController < ApplicationController
-  before_action :set_part, only: [:show, :edit, :update, :destroy]
+  before_action :set_part, only: [:update, :destroy]
   load_and_authorize_resource
   def create
     part = Part.new(part_params)

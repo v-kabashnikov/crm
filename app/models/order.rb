@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
   belongs_to :employee, class_name: "Employee"
   belongs_to :manager, class_name: "Manager"
   has_many :parts
+  has_many :messages
 
   enum status: %i[moderation approved employee_searching prepayment_waiting in_work solved finished]
 

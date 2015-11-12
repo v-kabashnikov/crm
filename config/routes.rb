@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  resources :messages
   resources :orders do
-    get '/approve', to: 'orders#approve', as: :approve, on: :member
+    get '/change_status/:status', to: 'orders#change_status', as: :change_status, on: :member
+    resources :messages
   end
   post '/orders/welcome', to: 'welcome#create_order', as: :welcome_orders
 

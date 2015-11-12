@@ -54,3 +54,7 @@ input {
 .btn-group .btn a {
 	display: block;
 }
+.form-group.required label:after {
+  content:"*";
+  color:#E24747;
+}

@@ -9,7 +9,6 @@ class OrdersController < ApplicationController
 
   # GET /orders/1
   def show
-    puts '1'*100
     puts @order.status
     if @order.status == 'moderation'
       render 'orders/show'
@@ -20,7 +19,14 @@ class OrdersController < ApplicationController
 
   def approve
     @order.update(status: :approved)
-      redirect_to @order, notice: 'Заказ одобрен'
+    redirect_to @order, notice: 'Заказ одобрен'
+  end
+
+  def change_status
+    if Order.statuses.map(&:first).include? params[:status]
+      @order.update(status: params[:status].to_sym)
+      redirect_to @order, notice: 'Статус заказа изменен'
+    end
   end
 
   # GET /orders/new
@@ -38,7 +44,7 @@ class OrdersController < ApplicationController
     @order.client_id = current_user.id if current_user.role == "Client"
 
     if @order.save
-      redirect_to @order, notice: 'Speciality was successfully created.'
+      redirect_to @order, notice: 'Заказ успешно создан.'
     else
       render :new
     end
@@ -51,7 +57,7 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1
   def update
     if @order.update(order_params)
-      redirect_to @order, notice: 'Order was successfully updated.'
+      redirect_to @order, notice: 'Заказ успешно обновлен.'
     else
       render :edit
     end

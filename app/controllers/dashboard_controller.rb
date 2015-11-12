@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
       @orders = current_user.orders
       render 'dashboard/client/orders'
     when 'Manager'
-      @orders = Order.all
+      @orders = Order.paginate(page: params[:page], per_page: 15)
       render 'dashboard/manager/orders'
     when 'Employee'
       @orders = current_user.orders

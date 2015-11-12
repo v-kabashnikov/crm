@@ -24,10 +24,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    puts '1' * 100
     @user = User.new(user_params)
     if @user.save
-      flash[:notice] = "Successfully created User."
+      flash[:notice] = "Пользователь успешно создан."
       redirect_to users_path
     else
       render action: 'new'

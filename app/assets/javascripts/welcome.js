@@ -7,4 +7,3 @@
 //= require_tree .
 //= require maskedinput
 //= require bootstrap-datetimepicker
-

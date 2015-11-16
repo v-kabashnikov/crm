@@ -1,5 +1,5 @@
 class PartsController < ApplicationController
-  before_action :set_part, only: [:update, :destroy]
+  before_action :set_part, only: [:update, :destroy, :upload]
   load_and_authorize_resource
   def create
     part = Part.new(part_params)
@@ -11,9 +11,16 @@ class PartsController < ApplicationController
     end
   end
 
+  def upload
+    if @part.update(upload_params)
+      redirect_to :back, notice: 'Файл загружен'
+    else
+      redirect_to :back, notice: 'Ошибка'
+    end
+  end
+
   def update
-    part = Part.find(params[:id])
-    if part.update(part_params)
+    if @part.update(part_params)
       redirect_to :back, notice: 'Часть успешно обновлена'
     else
       redirect_to :back, notice: 'Ошибка'
@@ -21,13 +28,17 @@ class PartsController < ApplicationController
   end
 
   def destroy
-    Part.find(params[:id]).destroy
+    @part.destroy
     redirect_to :back, notice: 'Часть усешно удален'
   end
 
   private
   def set_part
     @part = Part.find(params[:id])
+  end
+
+  def upload_params
+    params.require(:part).permit(:file)
   end
 
   def part_params

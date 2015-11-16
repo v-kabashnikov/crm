@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
 
   # GET /orders
   def index
-    @orders = Order.all
+    @orders = Order.paginate(:page => params[:page])
   end
 
   # GET /orders/1
@@ -25,6 +25,9 @@ class OrdersController < ApplicationController
   def change_status
     if Order.statuses.map(&:first).include? params[:status]
       @order.update(status: params[:status].to_sym)
+      if params[:status] == 'approved'
+        @order.update(manager_id: current_user.id)
+      end
       redirect_to @order, notice: 'Статус заказа изменен'
     end
   end
@@ -69,6 +72,17 @@ class OrdersController < ApplicationController
     redirect_to dashboard_index_path, notice: 'Заказ успешно удален'
   end
 
+  def set_employee
+    @order.update(employee_id: params[:employee_id], status: :in_work)
+
+    redirect_to @order, notice: 'Исполнитель назначен'
+  end
+
+  def unset_employee
+    @order.update(employee_id: nil, status: :approved)
+    redirect_to @order, notice: 'Исполнитель снят' 
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_order
@@ -82,6 +96,7 @@ class OrdersController < ApplicationController
     if ["Admin", "Manager"].include?(current_user.role)
       permitted.merge(params.require(:order).permit(:client_id, :employee_id, :employee_deadline, :inform_date, :status, :price))
     end
+    return permitted
   end
 
   # Only allow a trusted parameter "white list" through.

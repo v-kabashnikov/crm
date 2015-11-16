@@ -7,6 +7,14 @@ class ApplicationController < ActionController::Base
     redirect_to new_user_session_path, notice: exception.message
   end
 
+  def after_sign_in_path_for(resource)
+    dashboard_index_path
+  end
+
+  def after_sending_reset_password_instructions_path_for(resource_name)
+    edit_user_registration_path
+  end
+
   protected
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) do |u|

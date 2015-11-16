@@ -17,6 +17,11 @@ class Ability
       can :read, Message, sender_id: user.id
     elsif user.role == 'Employee'
       can :read, Order, employee_id: user.id
+      can :read, Order, employee_id: nil
+      can :upload, Part do |part|
+        part.status.in? ['waiting', 'rework']
+        part.order.employee_id == user.id
+      end
       can :read, Order do |order|
         order.status == 'employee_searching'
       end

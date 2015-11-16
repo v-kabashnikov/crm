@@ -1,0 +1,13 @@
+<% if can? :manage, Message %>
+  <% messages = @order.messages %>
+<% else %>
+  <% messages = (@order.messages.where(receiver_id: current_user.id).approved.to_a + 
+  	@order.messages.where(sender_id: current_user.id).to_a).sort_by(&:created_at) %>
+<% end %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <% messages.each do |message| %>
+      <%= render partial: 'messages/show', locals: { message: message } %>
+    <% end %>
+  </div>
+</div>

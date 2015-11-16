@@ -48,16 +48,18 @@
             <!-- <button type="submit" class="btn btn-default">Submit</button> -->
           </form>
           <!-- ================================================== -->
-          <% if can? :create, Part %>
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <% if can? :upload, Part %>
               <% if @order.parts %>
                 <% @order.parts.each do |part| %>
-                  <%= render partial: 'parts/form', locals: {part: part} %>
+                  <%= render partial: 'parts/form', locals: { part: part } %>
                 <% end %>
               <% end %>
-              <%= render partial: 'parts/form', locals: {part: Part.new } %>
-            </div>
-          <% end %>
+              <% if can? :create, Part %>
+                <%= render partial: 'parts/form', locals: { part: Part.new } %>
+              <% end %>
+            <% end %>
+          </div>
           <!-- panel-group -->
           <!--<button type="button" class="btn btn-primary btn-lg btn-block">Добавить часть</button>-->
           <div class="clearfix"></div>
@@ -153,43 +155,7 @@
       <% end %>
       <!-- panel panel-default -->
       <!-- ================================================== -->
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <div class="well well-sm">
-            <div class="media">
-              <div class="media-left media-middle">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading"><span class="text-primary">Администратор </span>| <span class="text-muted">20.10.2015 </span></h4>
-                <p>Гирокомпас устойчив. Вращение вращает устойчивый интеграл от переменной величины. Согласно теории устойчивости движения векторная форма стационарно переворачивает математический маятник. Центр сил представляет собой твердый крен.</p>
-              </div>
-            </div>
-          </div>
-          <div class="well well-sm">
-            <div class="media">
-              <div class="media-left media-middle">
-                <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading"><span class="text-success">Заказчик </span>| <span class="text-muted">21.10.2015 </span></h4>
-                <p>В самом общем случае угол тангажа методически требует большего внимания к анализу ошибок, которые даёт периодический курс, составляя уравнения Эйлера для этой системы координат.</p>
-              </div>
-            </div>
-          </div>
-          <div class="well well-sm">
-            <div class="media">
-              <div class="media-left media-middle">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading"><span class="text-primary">Администратор </span>| <span class="text-muted">22.10.2015 </span></h4>
-                <p>Вращение вращает устойчивый интеграл от переменной величины.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= render 'messages/index' %>
       <!-- panel -->
       <!-- ================================================== -->
       <%= render 'messages/form' %>

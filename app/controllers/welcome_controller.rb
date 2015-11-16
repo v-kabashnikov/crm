@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
   # load_and_authorize_resource :class => false
+  layout 'welcome'
   def index
     @order = Order.new
     @client = Client.new
@@ -19,11 +20,11 @@ class WelcomeController < ApplicationController
         if @order.save
           redirect_to root_path, notice: 'Заказ успешно создан. Вы получите на email инструкцию для входа в личный кабинет'
         else
-          render :index
+          redirect_to root_path
         end
       else
         flash[:notice] = 'Такой email уже зарегистрирован в системе'
-        render :index
+        redirect_to root_path
       end
     end
   end

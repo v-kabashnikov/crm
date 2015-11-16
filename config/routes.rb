@@ -2,12 +2,19 @@ Rails.application.routes.draw do
   resources :messages
   resources :orders do
     get '/change_status/:status', to: 'orders#change_status', as: :change_status, on: :member
-    resources :messages
+    get '/set_employee/:employee_id', to: 'orders#set_employee', as: :set_employee, on: :member
+    get '/unset_employee/:employee_id', to: 'orders#unset_employee', as: :unset_employee, on: :member
+    
+    resources :messages do
+      get '/approve', to: 'messages#approve', as: :approve, on: :member
+    end
   end
   post '/orders/welcome', to: 'welcome#create_order', as: :welcome_orders
 
   resources :worktypes
-  resources :parts
+  resources :parts do
+    patch '/upload', to: 'parts#upload', as: :upload, on: :member
+  end
 
   resources :specialities
   devise_for :users, path_names: { sign_up: '/sign_up/:role' }
@@ -21,6 +28,7 @@ Rails.application.routes.draw do
   scope '/dashboard' do 
     get '', to: 'dashboard#index', as: :dashboard_index
     get 'create_order', to: 'dashboard#create_order', as: :dashboard_create_order
+    get 'new_orders', to: 'dashboard#new_orders', as: :dashboard_new_orders
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

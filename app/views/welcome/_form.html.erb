@@ -1,12 +1,12 @@
 <%= form_for(@order, url: welcome_orders_path, method: :post, html: { onsubmit: "return validate_form()" }) do |f| %>
   <div class="col-md-12">
     <%= f.collection_select :worktype_id, Worktype.all, :id, :name, { prompt: 'Выберите тип работы' }, 
-                  class: "nice-select oneItem", onchange: "win_close()" %>
+                  class: "oneItem", onchange: "win_close()" %>
     <div id="txt1"></div>
   </div>
   <div class="col-md-12">
     <%= f.collection_select :speciality_id, Speciality.all, :id, :name, { prompt: 'Выберите предмет'} ,
-                  class: "nice-select oneItem", onchange: "win_close()" %>
+                  class: "oneItem", onchange: "win_close()" %>
     <div id="txt2"></div>
   </div>
   <div class="col-md-12">

@@ -19,6 +19,7 @@ ready = function() {
         maxDate: "01.01.2020",
         widgetPositioning: { vertical: 'top'}
     });
+    $('select.oneItem').niceSelect();
 
 };
 

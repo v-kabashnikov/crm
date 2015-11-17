@@ -31,4 +31,8 @@ class User < ActiveRecord::Base
                }
     text_styles[self.role]
   end
+
+  def name_for_select
+    "#{self.name} (#{self.email})"
+  end
 end

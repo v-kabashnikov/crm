@@ -10,6 +10,8 @@
           <%= link_to '', unset_employee_order_path(@order, message.sender), 
               class: "glyphicon #{message.sender.glyphicon} #{message.sender.text_style}",
                title: 'Снять', data: { confirm: "Снять #{ message.sender.name } с заказа" } %>
+        <% else %>
+          <span class="glyphicon <%= message.sender.glyphicon %>" aria-hidden="true"></span>
         <% end %>
       <% else %>
         <span class="glyphicon <%= message.sender.glyphicon %>" aria-hidden="true"></span>

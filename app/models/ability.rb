@@ -12,21 +12,23 @@ class Ability
       can :read, [Client, Employee]
     elsif user.role == 'Client'
       can :create, [Order, Message]
+      can :read, Part do |part|
+        part.order.client_id == user.id && part.status == 'approved'
+      end
       can [:read, :update], Order, client_id: user.id
-      can :read, Message, receiver_id: user.id, status: :approved 
+      can :read, Message, receiver_id: user.id, status: :approved
       can :read, Message, sender_id: user.id
     elsif user.role == 'Employee'
       can :read, Order, employee_id: user.id
       can :read, Order, employee_id: nil
       can :upload, Part do |part|
-        part.status.in? ['waiting', 'rework']
-        part.order.employee_id == user.id
+        part.status.in?( ['waiting', 'rework'] ) && part.order.employee_id == user.id
       end
       can :read, Order do |order|
         order.status == 'employee_searching'
       end
       can :create, Message
-      can :read, Message, receiver_id: user.id, status: :approved 
+      can :read, Message, receiver_id: user.id, status: :approved
       can :read, Message, sender_id: user.id
     end
 

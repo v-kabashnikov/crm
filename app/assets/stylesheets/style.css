@@ -35,3 +35,12 @@ input {
 .btn-group .btn a {
 	display: block;
 }
+
+a.glyphicon:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+a.glyphicon:link {
+	text-decoration: none;
+}

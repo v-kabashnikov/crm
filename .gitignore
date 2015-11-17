@@ -45,3 +45,6 @@ bower.json
 
 /config/initializers/secret_token.rb
 /config/deploy/
+
+.tags
+.tags_sorted_by_file

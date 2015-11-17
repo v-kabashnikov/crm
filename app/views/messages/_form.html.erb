@@ -12,9 +12,13 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
           <p>Отправить сообщение</p>
-          <% if ['Admin', 'Manager'].include? current_user.role %>
+          <% if current_user.role == 'Manager' %>
             <%= f.submit "Отправить заказчику", class: 'btn btn-primary btn-block', name: "receiver[#{@order.client_id}]" if @order.client_id %>
             <%= f.submit "Отправить автору", class: 'btn btn-warning btn-block', name: "receiver[#{@order.employee_id}]" if @order.employee_id %>
+          <% elsif current_user.role == 'Admin' %>
+            <%= f.submit "Отправить менеджеру", class: 'btn btn-primary btn-block', name: "receiver[#{@order.manager_id}]" if @order.manager_id %>
+            <%= f.submit "Отправить автору", class: 'btn btn-warning btn-block', name: "receiver[#{@order.employee_id}]" if @order.employee_id %>
+            <%= f.submit "Отправить заказчику", class: 'btn btn-primary btn-block', name: "receiver[#{@order.client_id}]" if @order.client_id %>
           <% elsif current_user.role == 'Client' %>
             <%= f.submit "Отправить менеджеру", class: 'btn btn-primary btn-block', name: "receiver[#{@order.manager_id}]" if @order.manager_id %>
             <%= f.submit "Отправить автору", class: 'btn btn-warning btn-block', name: "receiver[#{@order.employee_id}]" if @order.employee_id %>

@@ -8,3 +8,9 @@
     </p>
   <% end %>
 <% end %>
+<% if @order.document? %>
+  <p>
+    <strong><%= t "activerecord.attributes.order.document" %>:</strong>
+    <%= link_to @order.document_file_name, @order.document.url  %>
+  </p>
+<% end %>

@@ -4,6 +4,8 @@
   <div class="page-header">
     <h2 class="text-center">Заказ №<%= @order.id%>
       <% if can? :manage, @order %>
+        <%= link_to '', edit_order_path(@order), 
+              class: 'glyphicon glyphicon-edit', title: 'Редактировать' %>
         <%= link_to 'Завершить заказ', change_status_order_path(@order, :finished), class: "btn btn-info" %>
       <% end %>
     </h2>
@@ -11,7 +13,7 @@
   <!-- ================================================== -->
   <div class="panel panel-default">
     <div class="panel-body">
-      <% client = @order.client; employee = @order.employee %>
+      <% client = @order.client; employee = @order.employee; manager = @order.manager %>
       <% if client %>
         <% if can? :read, client %>
           <%= render partial: 'dashboard/contacts', locals: {user: client, klass: ''} %>
@@ -20,6 +22,11 @@
       <% if employee %>
         <% if can? :read, employee %>
           <%= render partial: 'dashboard/contacts', locals: {user: employee, klass: 'pull-right'} %>
+        <% end %>
+      <% end %>
+      <% if manager %>
+        <% if current_user.role != "Manager" %>
+          <%= render partial: 'dashboard/contacts', locals: {user: manager, klass: ''} %>
         <% end %>
       <% end %>
     </div>
@@ -55,9 +62,13 @@
                   <%= render partial: 'parts/form', locals: { part: part } %>
                 <% end %>
               <% end %>
-              <% if can? :create, Part %>
-                <%= render partial: 'parts/form', locals: { part: Part.new } %>
+            <% elsif can? :read, Part %>
+              <% @order.parts.approved.each do |part| %>
+                <%= render partial: 'parts/show', locals: { part: part } %>
               <% end %>
+            <% end %>
+            <% if can? :create, Part %>
+              <%= render partial: 'parts/form', locals: { part: Part.new } %>
             <% end %>
           </div>
           <!-- panel-group -->

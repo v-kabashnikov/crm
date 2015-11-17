@@ -13,6 +13,7 @@ ru:
         uniqueness: Уникальность
         comment: Комментарий
         deadline: 'Срок выполнения'
+        document: 'Документ'
         inform_date: 'Дата информирования'
         employee_deadline: 'Срок для исполнителя'
         page_number: 'Количество страниц'

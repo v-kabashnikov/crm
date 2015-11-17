@@ -23,9 +23,6 @@
             <%= link_to('Выйти', destroy_user_session_path, method: :delete) %>
           </li>
         <% else %>
-          <li>
-            <%= link_to('Регистрация', new_user_registration_path('client'), title: 'Зарегистрироваться как клиент')  %>
-          </li>
           <li class="singInBtn">
             <%= link_to('Войти', new_user_session_path)  %>
           </li>
@@ -57,56 +54,7 @@
           <div class="field">
           </div>
           <div class="col-md-6 rightside">
-            <%= form_for(@order, url: welcome_orders_path, method: :post) do |f| %>
-              <div class="col-md-12">
-                <%= f.collection_select :worktype_id, Worktype.all, :id, :name, { prompt: 'Выберите тип работы'}, 
-                  class: "nice-select oneItem", onchange: "win_close()", require: true %>
-                <div id="txt1"></div>
-              </div>
-              <div class="col-md-12">
-                <%= f.collection_select :speciality_id, Speciality.all, :id, :name, { prompt: 'Выберите предмет'} ,
-                  class: "nice-select oneItem", onchange: "win_close()" %>
-                <div id="txt2"></div>
-              </div>
-              <div class="col-md-12">
-                <%= f.text_field :theme, class: "form-control oneItem", placeholder: "Тема работы", onKeyUp: "win_close()" %>
-                <div id="txt3"></div>
-              </div>
-              <!--<div class="col-md-12">
-                <div class="file_upload oneItem">
-                  <input type="text" class="form-control" placeholder="Прикрепить файлы" />
-                  <div class="imgPort">
-                    <%= image_tag 'download.png', class: "text-right img-resonsive" %>
-                  </div>
-                  <input type="file" name="my_file" />
-                </div>
-              </div>-->
-              <div class="col-md-6">
-                <div class="form-group oneItem">
-                  <div class='input-group date' id='datetimepicker1'>
-                    <%= f.date_select :deadline %>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <%= f.number_field :page_number, class: "form-control oneItem", placeholder: "10 страниц" %>
-              </div>
-              <% unless current_user %>
-                <%= f.fields_for @client do |g| %>
-                  <div class="col-md-6">
-                    <%= g.text_field :email, class: "form-control oneItem", placeholder: "Email", onKeyUp: "win_close()" %>
-                    <div id="txt4"></div>
-                  </div>
-                  <div class="col-md-6">
-                    <%= g.text_field :phone, class: 'mobile-phone form-control oneItem', placeholder: "Телефон", onKeyUp: "win_close()" %>
-                    <div id="txt5"></div>
-                  </div>
-                <% end %>
-              <% end %>
-              <div class="col-md-6">
-                <%= f.submit 'Отправить заявку', class: "RedBTN MySend" %>
-              </div>
-            <% end %>
+            <%= render 'welcome/form' %>
           </div>
         </div>
         <!-- owl item -->
@@ -228,7 +176,7 @@
             <option value="2">TTT</option>
             <option value="3">JJJ</option>
           </select>
-          <input type="text" class="form-control oneItem" placeholder="Телефон">
+          <input type="text" class="form-control oneItem mobile-phone" placeholder="Телефон">
           <input type="button" class="RedBTN MySend" onClick=validate_form2() value="Отправить заявку" />
         </div>
       </form>
@@ -299,11 +247,3 @@
     </div>
   </div>
 </footer>
-<!--<script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/bootstrap-datetimepicker.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/owl.carousel.js"></script>
-    <script src="js/moment.js"></script>
-    <script src="js/form.js"></script>
-    <script src="js/script.js"></script> -->

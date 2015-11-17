@@ -1,0 +1,14 @@
+ru:
+  activerecord:
+    models:
+      part: часть
+    attributes:
+      part:
+        name: 'Название части'
+        status: 'Статус'
+        statuses:
+          waiting: 'В работе'
+          moderation: Модерация
+          approved: Одобрена
+          rework: 'На доработка'
+          denied: 'Отклонена'

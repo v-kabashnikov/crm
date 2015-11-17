@@ -4,7 +4,7 @@
   <% else %>
     <% url = upload_part_path(part) %>
   <% end %>
-  <%= form_for(part, path: url) do |f| %>
+  <%= form_for(part, url: url) do |f| %>
     <%= f.hidden_field :order_id, value: @order.id %>
     <div class="panel-heading" role="tab" id="headingOne">
       <div class="row">
@@ -43,24 +43,35 @@
         </div>
         <div class="panel panel-default">
           <div class="panel-body">
-            <p class="text-muted text-uppercase text-center"><strong>Перетащите файлы сюда</strong></p>
             <% if part.file.size %>
               <p class="text-primary"><%= link_to part.file_file_name, part.file.url %></p>
             <% end %>
-            <div class="form-group">
-              <% if can? :upload, part %>
+            <% if can? :upload, part %>
+              <p class="text-muted text-uppercase text-center"><strong>Перетащите файлы сюда</strong></p>
+              <div class="form-group">
                 <%= f.file_field :file %>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           </div>
         </div>
         <br/>
         <% if can? :manage, part %>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-5">
+                <%= f.label :status %>
+              </div>
+              <div class="col-xs-7">
+                <%= f.collection_select :status, Part.status_names_for_select, 
+                  :second, :first, { prompt: 'Статус'}, {class: 'form-control'} %>
+              </div>
+            </div>
+          </div>
           <%= f.button "Сохранить", class: 'btn btn-primary btn-lg btn-block' %>
           <% if part.id %>
             <%= link_to 'Удалить часть', part_path(part), method: :delete, class: "btn btn-danger btn-lg btn-block", data: { confirm: "Вы уверены?"} %>
           <% end %>
-        <% elsif can? :upload, Part %>
+        <% elsif can? :upload, part %>
           <%= f.button "Загрузить", class: 'btn btn-primary btn-lg btn-block' %>
         <% end %>
       </div>

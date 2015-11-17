@@ -3,7 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "home/nice-select";
+@import "home/owl.carousel";
+@import "home/owl.theme";
+@import "home/style";
 @import 'bootstrap-datetimepicker';
-@import "home/*";
-@import "style";
 

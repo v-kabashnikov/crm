@@ -1,0 +1,50 @@
+<%= form_for(@order, url: welcome_orders_path, method: :post, html: { onsubmit: "return validate_form()" }) do |f| %>
+  <div class="col-md-12">
+    <%= f.collection_select :worktype_id, Worktype.all, :id, :name, { prompt: 'Выберите тип работы' }, 
+                  class: "nice-select oneItem", onchange: "win_close()" %>
+    <div id="txt1"></div>
+  </div>
+  <div class="col-md-12">
+    <%= f.collection_select :speciality_id, Speciality.all, :id, :name, { prompt: 'Выберите предмет'} ,
+                  class: "nice-select oneItem", onchange: "win_close()" %>
+    <div id="txt2"></div>
+  </div>
+  <div class="col-md-12">
+    <%= f.text_field :theme, class: "form-control oneItem", placeholder: "Тема работы", onKeyUp: "win_close()" %>
+    <div id="txt3"></div>
+  </div>
+  <div class="col-md-12">
+    <div class="file_upload oneItem">
+      <input type="text" class="form-control" placeholder="Прикрепить файлы" />
+      <div class="imgPort">
+        <%= image_tag 'download.png', class: "text-right img-resonsive" %>
+      </div>
+      <%= f.file_field :document %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group oneItem">
+      <div class='input-group date'>
+        <%= f.date_select :deadline %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <%= f.number_field :page_number, class: "form-control oneItem", placeholder: "10 страниц" %>
+  </div>
+  <% unless current_user %>
+    <%= f.fields_for @client do |g| %>
+      <div class="col-md-6">
+        <%= g.text_field :email, class: "form-control oneItem", placeholder: "Email", onKeyUp: "win_close()" %>
+        <div id="txt4"></div>
+      </div>
+      <div class="col-md-6">
+        <%= g.text_field :phone, class: 'mobile-phone form-control oneItem', placeholder: "Телефон", onKeyUp: "win_close()" %>
+        <div id="txt5"></div>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="col-md-6">
+    <%= f.submit 'Отправить заявку', class: "RedBTN MySend" %>
+  </div>
+<% end %>

@@ -17,21 +17,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  def approve
-    @order.update(status: :approved)
-    redirect_to @order, notice: 'Заказ одобрен'
-  end
-
-  def change_status
-    if Order.statuses.map(&:first).include? params[:status]
-      @order.update(status: params[:status].to_sym)
-      if params[:status] == 'approved'
-        @order.update(manager_id: current_user.id)
-      end
-      redirect_to @order, notice: 'Статус заказа изменен'
-    end
-  end
-
   # GET /orders/new
   def new
     @order = Order.new
@@ -53,10 +38,6 @@ class OrdersController < ApplicationController
     end
   end
 
-
-  # POST /orders
-
-
   # PATCH/PUT /orders/1
   def update
     if @order.update(order_params)
@@ -72,6 +53,16 @@ class OrdersController < ApplicationController
     redirect_to dashboard_index_path, notice: 'Заказ успешно удален'
   end
 
+  def change_status
+    if Order.statuses.map(&:first).include? params[:status]
+      @order.update(status: params[:status].to_sym)
+      if params[:status] == 'approved'
+        @order.update(manager_id: current_user.id)
+      end
+      redirect_to @order, notice: 'Статус заказа изменен'
+    end
+  end
+
   def set_employee
     @order.update(employee_id: params[:employee_id], status: :in_work)
 
@@ -80,7 +71,7 @@ class OrdersController < ApplicationController
 
   def unset_employee
     @order.update(employee_id: nil, status: :approved)
-    redirect_to @order, notice: 'Исполнитель снят' 
+    redirect_to @order, notice: 'Исполнитель снят'
   end
 
   private
@@ -90,16 +81,11 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    permitted = params.require(:order).permit(:worktype_id, :worktype_other, :speciality_id, :speciality_other,
-                                              :institution, :theme, :uniqueness, :document, :comment, :deadline,
-                                              :page_number)
+    permitted_arr = [:worktype_id, :worktype_other, :speciality_id, :speciality_other,
+                     :institution, :theme, :uniqueness, :document, :comment, :deadline, :page_number]
     if ["Admin", "Manager"].include?(current_user.role)
-      permitted.merge(params.require(:order).permit(:client_id, :employee_id, :employee_deadline, :inform_date, :status, :price))
+      permitted_arr << [:client_id, :employee_id, :employee_deadline, :inform_date, :status, :price]
     end
-    return permitted
+    params.require(:order).permit(permitted_arr)
   end
-
-  # Only allow a trusted parameter "white list" through.
-
-
 end

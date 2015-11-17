@@ -10,6 +10,12 @@ class WelcomeController < ApplicationController
     @order = Order.new(order_params.except(:client))
     if current_user
       @order.client_id = current_user.id if current_user.role = "Client"
+      if @order.save
+        redirect_to root_path, notice: 'Заказ успешно создан.'
+      else
+        flash[:notice] = 'Ошибка'
+        redirect_to root_path
+      end
     else
       @client = Client.new(order_params[:client])
       @client.password = SecureRandom.hex

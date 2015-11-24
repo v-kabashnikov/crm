@@ -22,8 +22,14 @@ class NotesController < ApplicationController
 
   # POST /notes
   def create
-    commentary_params= {:employee_id => params[:employee_id], :manager_id => current_user[:id], :content => params[:commentary], :order_id => params[:current_order].to_i}
-    note_params= {:manager_id => current_user[:id], :content => params[:note], :order_id => params[:current_order].to_i}
+    if params[:employee_id].nil?
+      commentary_params= {:employee_id => "N/A", :manager_id => current_user[:id], :content => params[:commentary], :order_id => params[:current_order].to_i}
+      note_params= {:manager_id => current_user[:id], :content => params[:note], :order_id => params[:current_order].to_i}
+    else
+      commentary_params= {:employee_id => params[:employee_id], :manager_id => current_user[:id], :content => params[:commentary], :order_id => params[:current_order].to_i}
+      note_params= {:manager_id => current_user[:id], :content => params[:note], :order_id => params[:current_order].to_i}
+    end
+
     @db_note = Note.find_by_order_id(params[:current_order])
     @db_commentary = Commentary.find_by_order_id(params[:current_order])
     if @db_note.nil?

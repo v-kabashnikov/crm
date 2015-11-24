@@ -58,12 +58,12 @@
               <h3>Примечания (по всему заказу)</h3>
               <%= form_tag("/notes", method: "post" ) do %>
                   <%= hidden_field_tag :current_order , @order.id %>
-                  <%= hidden_field_tag :employee_id , @order.employee.id %>
+                  <%= hidden_field_tag :employee_id , @order.employee.id if @order.employee != nil  %>
                   <% if can? :manage, Note %>
                     <div class="form-group">
                       <%= label_tag(:note, "Заметки") %>
                       <% if @note.nil? %>
-                        <%= text_area_tag(:note, class: "form-control", rows: "3") %>
+                        <%= text_area_tag(:note, "",  class: "form-control", rows: "3") %>
                       <% else %>
                         <%= text_area_tag(:note, @note.content, class: "form-control", rows: "3") %>
                       <% end %>
@@ -73,7 +73,7 @@
                      <div class="form-group">
                      <%= label_tag(:note_author, "Заметки для автора") %>
                      <% if @commentary.nil? %>
-                       <%= text_area_tag(:commentary, id: "note_author", class: "form-control", rows: "3") %>
+                       <%= text_area_tag(:commentary, "", id: "note_author", class: "form-control", rows: "3") %>
                      <% else %>
                        <%= text_area_tag(:commentary, @commentary.content, id: "note_author", class: "form-control", rows: "3") %>
                      <% end %>

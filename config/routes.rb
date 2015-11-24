@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :events
   resources :messages
   resources :orders do
     get '/change_status/:status', to: 'orders#change_status', as: :change_status, on: :member
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
   end
   post '/orders/welcome', to: 'welcome#create_order', as: :welcome_orders
 
+  resources :notes
   resources :worktypes
   resources :parts do
     patch '/upload', to: 'parts#upload', as: :upload, on: :member

@@ -1,0 +1,23 @@
+default: &default
+  app_name: 'crm'
+  host: 'localhost:3000'
+
+  admin_email: 'admin@site.ru'
+  password: 'password1'
+  
+  database_username: 'postgres'
+  database_password: '0194'
+development:
+  <<: *default
+test:
+  <<: *default
+production:
+  app_name: 'crm'
+  host: 'diplom.dshop24.ru'
+
+  admin_email: 'admin@crm.ru'
+  password: 'password2'
+
+  database_username: 'deployer'
+  database_password: 'database_password_2'
+  SECRET_KEY_BASE: 8811c311e7817c5da8213ea120bdc3519df95512b87d16c7a556db571e183f0f1e29ccd8dc3e4a302a303edb8feae7e38fb274c24a8fbac49afed611ef29df80

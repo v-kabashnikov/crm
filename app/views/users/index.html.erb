@@ -26,7 +26,7 @@
     <% ['client', 'employee'].each do |role| %>
     <% klass = 'active' if role == active_role %>
       <li role="presentation" class="<%= klass %> clickable">
-        <%= link_to "#{role}", "##{role}", {"aria-controls": role, "role": "tab", "data-toggle": "tab" } %>
+        <%= link_to "#{role}", "##{role}", {"aria-controls"=> role, "role"=> "tab", "data-toggle"=> "tab" } %>
       </li>
     <% end %>
   </ul>

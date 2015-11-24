@@ -24,4 +24,6 @@ class Order < ActiveRecord::Base
     end
     names
   end
+
+
 end

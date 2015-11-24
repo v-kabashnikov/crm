@@ -42,8 +42,8 @@
             <button type="button" class="btn btn-primary pull-right">Поиск исполнителя</button>
           </div>
           <div class="clearfix"></div>
-          <h3>Примечания (по всему заказу)</h3>
-          <form>
+
+         <!-- <form method="post" action="/notes">
             <div class="form-group">
               <label for="note">Заметки</label>
               <textarea class="form-control" rows="3" id="note"></textarea>
@@ -52,8 +52,39 @@
               <label for="note_author">Заметки для автора</label>
               <textarea class="form-control" rows="3" id="note_author"></textarea>
             </div>
-            <!-- <button type="submit" class="btn btn-default">Submit</button> -->
-          </form>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>-->
+              <h3>Примечания (по всему заказу)</h3>
+              <%= form_tag("/notes", method: "post" ) do %>
+                  <%= hidden_field_tag :current_order , @order.id %>
+                  <%= hidden_field_tag :employee_id , @order.employee.id %>
+                  <% if can? :manage, Note %>
+                    <div class="form-group">
+                      <%= label_tag(:note, "Заметки") %>
+                      <% if @note.nil? %>
+                        <%= text_area_tag(:note, class: "form-control", rows: "3") %>
+                      <% else %>
+                        <%= text_area_tag(:note, @note.content, class: "form-control", rows: "3") %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                  <% if can? :read, Commentary %>
+                     <div class="form-group">
+                     <%= label_tag(:note_author, "Заметки для автора") %>
+                     <% if @commentary.nil? %>
+                       <%= text_area_tag(:commentary, id: "note_author", class: "form-control", rows: "3") %>
+                     <% else %>
+                       <%= text_area_tag(:commentary, @commentary.content, id: "note_author", class: "form-control", rows: "3") %>
+                     <% end %>
+                     </div>
+                  <% end %>
+                  <% if can? :manage, Note %>
+                    <%= submit_tag("Сохранить", class: "btn btn-default") %>
+                  <% end %>
+              <% end %>
+
+
           <!-- ================================================== -->
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <% if can? :upload, Part %>

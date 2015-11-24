@@ -7,4 +7,11 @@ class Message < ActiveRecord::Base
   def sender_role
 
   end
+
+  after_create :add_event
+  def add_event
+    event_params = { :user_id => self.sender.id, :event_type => "message", :content  => self.content, :link => "orders/#{self.order_id}##{self.id}" }
+    event = Event.new(event_params)
+    event.save
+  end
 end
